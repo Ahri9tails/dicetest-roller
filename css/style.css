@@ -23,6 +23,9 @@ input[type=text] {
 input[type=number] {
 	background: none;
 	border: none;
+	padding-left: 1rem;
+	font-size: 4rem;
+	text-align: center;
 	color: var(--dark-text);
 	box-sizing: border-box;
 	flex: 1;
@@ -47,16 +50,19 @@ input[type=number] {
 
 .small-box {
 	min-height: 4.375rem;
+	max-width: 10rem;
 	background-color: var(--window-bg-color);
 	text-align: center;
 	border: solid 6px var(--window-border-color);
 	border-radius: 2%;
+	display: flex;
+	flex-direction: column;
 
 }
 
 .dice-input-box {
 	/* width is being limited by smallgrid already*/
-	max-width: 16rem;
+/* 	max-width: 16rem; */
 }
 
 .box-label {
