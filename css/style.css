@@ -84,15 +84,18 @@ input[type=number] {
 #rollbox {
 	min-height: 27rem;
 	min-width: 21.563rem;
+	max-width: 21.563rem;
 	background-color: var(--window-bg-color);
 	position: relative;
 	border: solid 6px var(--window-border-color);
 	border-radius: 2%;
 }
 
-#roll-btn {
+#roll-button {
 	position: absolute;
 	display: flex;
+	color: var(--dark-text);
+	font-size: x-large;
 	width: 100%;
 	bottom: 0;
 	background: linear-gradient(90deg, hsl(298, 22%, 30%, 19%) 0%, hsl(301, 100%, 67%, 19%) 50%, hsl(298, 21%, 30%, 19%) 100%);
@@ -103,6 +106,15 @@ input[type=number] {
 	justify-content: center;
 }
 
+#roll-button:hover {
+	color:aliceblue;
+	background: var(--window-bg-color);
+}
+
+#roll-button:active {
+	background: linear-gradient(90deg, hsl(298, 22%, 30%, 19%) 0%, hsl(298, 22%, 30%, 19%) 50%, hsl(298, 21%, 30%, 19%) 100%);
+}
+
 #new-roll-log {
 	grid-column: span 2;
 	border: solid 6px var(--window-border-color);
@@ -110,6 +122,10 @@ input[type=number] {
 	padding: 0.8rem;
 	margin-top: 2rem;
 	background: var(--log-bg-color);
+}
+
+#total-box, #successes-box {
+	font-size: 2rem;
 }
 
 #roll-log {

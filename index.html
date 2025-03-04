@@ -10,45 +10,44 @@
 
 </head>
 <body>
-	Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis, soluta assumenda. 
-	<br>
-	Eligendi possimus nisi iste necessitatibus illum. Esse facilis eos rem commodi accusamus, magni 
-	<br>
-	nam necessitatibus? Numquam cupiditate vero quis.
 	<div class="base-window">
-		<input type="text" placeholder="enter username here...">
+		<input type="text" placeholder="enter username here..." id="username">
 	</div>
 	<div class="double-grid">
 		<div class="grid">
 			<div id="rollbox" class="grid-col-span-2">
-				<div id="roll-btn">button</div>
+				<div id="rollbox-content"></div>
+				<button id="roll-button">Roll</button>
 			</div>
 
 			<div class="small-box">
 				<div class="box-label">Total</div>
+				<div id="total-box">0</div>
 			</div>
 			<div class="small-box">
 				<div class="box-label">Successes</div>
+				<div id="successes-box">0</div>
 			</div>
 		</div>
 		<div class="smallgrid">
 			<div class="small-box dice-input-box">
 				<div class="box-label">Sides</div>
-				<input type="number" placeholder="#">
+				<input type="number" id="sides-box" placeholder="#" value="6">
 			</div>
 			<div class="small-box">
-				<div class="box-label">#</div>
-				<input type="number" placeholder="#">
+				<div class="box-label"># of dice</div>
+				<input type="number" id="quantity-box" placeholder="#" value="5">
 				
 			</div>
 			<div class="small-box hidden-box"></div>
 			<div class="small-box">
 				<div class="box-label">DC</div>
-				<input type="number" placeholder="#">
+				<input type="number" id="target-number-box" placeholder="#">
 			</div>
 		</div>
-		<div id="new-roll-log">User rolled XdX: 1, 1, 1, 1, 1, 1, 1, 1, 1. | Total: 10| Successes: 0</div>
-		<div id="roll-log" class="grid-col-span-2">roll log</div>
+		<div id="new-roll-log">
+		</div>
+		<div id="roll-log" class="grid-col-span-2"></div>
 	</div>
 
 </body>
