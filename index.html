@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link href="css/style.css" rel="stylesheet">
+	<script src="js/dice.js" defer></script>
+
+</head>
+<body>
+	Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis, soluta assumenda. 
+	<br>
+	Eligendi possimus nisi iste necessitatibus illum. Esse facilis eos rem commodi accusamus, magni 
+	<br>
+	nam necessitatibus? Numquam cupiditate vero quis.
+	<div class="base-window">
+		<div>label</div>
+		<input type="text" placeholder="enter username here...">
+	</div>
+	<div class="double-grid">
+		<div class="grid">
+			<div id="rollbox" class="grid-col-span-2">
+				<div id="roll-btn">button</div>
+			</div>
+
+			<div class="small-box">
+				<div class="box-label">Total</div>
+			</div>
+			<div class="small-box">
+				<div class="box-label">Successes</div>
+			</div>
+		</div>
+		<div class="smallgrid">
+			<div class="small-box dice-input-box">
+				<div class="box-label">Sides</div>
+				<input type="number" placeholder="#">
+			</div>
+			<div class="small-box">
+				<div class="box-label">#</div>
+				<input type="number" placeholder="#">
+				
+			</div>
+			<div class="small-box hidden-box"></div>
+			<div class="small-box">
+				<div class="box-label">DC</div>
+				<input type="number" placeholder="#">
+			</div>
+		</div>
+		<div id="new-roll-log">User rolled XdX: 1, 1, 1, 1, 1, 1, 1, 1, 1. | Total: 10| Successes: 0</div>
+		<div id="roll-log" class="grid-col-span-2">roll log</div>
+	</div>
+
+</body>
+</html>

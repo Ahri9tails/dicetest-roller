@@ -1,0 +1,150 @@
+html {
+	font-size: 100%;
+	box-sizing: border-box;
+  }
+
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: var(--font-inter);
+	background: var(--dark-bg);
+	color: var(--dark-text);
+}
+
+input[type=text] {
+	background: none;
+	border: none;
+	color: var(--dark-text);
+	box-sizing:border-box;
+	flex: 1;
+}
+
+input[type=number] {
+	background: none;
+	border: none;
+	color: var(--dark-text);
+	box-sizing: border-box;
+	flex: 1;
+}
+
+.base-window {
+	background-color: var(--window-bg-color);
+	max-width: 21.563rem;
+	min-height: 4rem;
+	margin: 5px 0px 15px;
+	border: solid 6px var(--window-border-color);
+	border-radius: 2%;
+	display: flex;
+
+}
+
+.double-grid {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 0.5rem 5rem;
+}
+
+.small-box {
+	min-height: 4.375rem;
+	background-color: var(--window-bg-color);
+	text-align: center;
+	border: solid 6px var(--window-border-color);
+	border-radius: 2%;
+
+}
+
+.dice-input-box {
+	/* width is being limited by smallgrid already*/
+	max-width: 16rem;
+}
+
+.box-label {
+ 	min-width: 80%;
+	max-height: 1.5rem;
+	margin-left: 6.5%;
+	margin-right: 10%;
+	position: relative;
+	background: var(--window-bg-color);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-bottom: inset 6px var(--window-border-color);
+	border-left: double 6px var(--window-border-color);
+	border-right: double 6px var(--window-border-color);
+	
+}
+
+#rollbox {
+	min-height: 27rem;
+	min-width: 21.563rem;
+	background-color: var(--window-bg-color);
+	position: relative;
+	border: solid 6px var(--window-border-color);
+	border-radius: 2%;
+}
+
+#roll-btn {
+	position: absolute;
+	display: flex;
+	width: 100%;
+	bottom: 0;
+	background: linear-gradient(90deg, hsl(298, 22%, 30%, 19%) 0%, hsl(301, 100%, 67%, 19%) 50%, hsl(298, 21%, 30%, 19%) 100%);
+	border: solid 3px hsl(274, 30%, 14%);
+	box-sizing: border-box;
+	min-height: 4.5rem;
+	align-items: center;
+	justify-content: center;
+}
+
+#new-roll-log {
+	grid-column: span 2;
+	border: solid 6px var(--window-border-color);
+	border-radius: 2%;
+	padding: 0.8rem;
+	margin-top: 2rem;
+	background: var(--log-bg-color);
+}
+
+#roll-log {
+	min-height: 20rem;
+	border: solid 6px var(--window-border-color);
+	border-radius: 2%;
+	background: var(--log-bg-color);
+}
+
+.grid {
+	display: grid;
+	gap: 1.5rem;
+	grid-template-columns: repeat(2, 1fr);
+	max-width: 27rem;
+	justify-content: left;
+}
+
+.smallgrid {
+	display: grid;
+	max-width: 11.06rem;
+	max-height: 27rem;
+}
+
+.grid-col-span-2 {
+	grid-column: span 2;
+}
+
+.hidden-box {
+	visibility: hidden;
+}
+
+:root {
+	--dark-bg: hsl(224, 26%, 20%);
+	--dark-text: hsl(300, 36%, 79%); 
+	--dark-windowbg1: hsla(0, 83%, 73%, 29%);
+	--dark-windowbg2: hsl(221, 57%, 21%, 100%);
+	--window-border-color: color-mix(in prophoto-rgb, var(--dark-windowbg2), var(--dark-windowbg1));
+	--window-bg-color: hsl(299, 59%, 49%, 6%);
+	--log-bg-color: hsl(249, 44%, 15%, 90%); 
+}
+
+:root {
+	--font-inter: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
