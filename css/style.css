@@ -123,7 +123,7 @@ input[type=number] {
 }
 
 .clipboard-button {
-	background: url(/icons/copy_to_clipboard_line_icon.png);
+	background: url(../icons/copy_to_clipboard_line_icon.png);
 	background-size: contain;
 	background-color: hsl(301, 100%, 67%, 19%);
 	border: none;
