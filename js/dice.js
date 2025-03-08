@@ -153,7 +153,7 @@ function renderRoll(rollResults, total, successes, faces, targetNumber, username
 	let rollResultString = rollResultsStyle[0]
 
 	//the string that should be inserted into the clipboard on clipboard button press
-	let newResultClipboard = `${username} rolled: ${clipboardStyle[0]}`
+	let newResultClipboard = clipboardStyle[0]
 	for (let i = 1; i < rollResultsStyle.length; i++) {
 		//to avoid the trailing comma, we make the variable equal to the first item in the array
 		//then start the loop at 1 instead of 0, and have the comma placed first, then the item.
@@ -174,12 +174,14 @@ function renderRoll(rollResults, total, successes, faces, targetNumber, username
 	}
 
 	rollResultString = `${username} rolled: ${rollResultString}. | Total: ${total}.`
+	newResultClipboard = `${username} rolled: ${newResultClipboard}. | Total: ${total}.`
 
 	//check for DC value. Add successes to box and log 
 	//otherwise skip and set successes to 0
 	if (targetNumber || targetNumber === 0) {
 		successesBox.innerHTML = successes
 		rollResultString += `| Successes: ${successes}`
+		newResultClipboard += `| Successes: ${successes}`
 	} else {
 		successesBox.innerHTML = "0"
 	}
@@ -187,7 +189,7 @@ function renderRoll(rollResults, total, successes, faces, targetNumber, username
 	newRoll.innerHTML = rollResultString
 	rollLog.innerHTML += rollResultString + "</br>"
 	totalBox.innerHTML = total
-
+	console.log(newResultClipboard)
 	return newLogText = newResultClipboard
 }
 
