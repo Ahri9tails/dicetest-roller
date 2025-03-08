@@ -196,8 +196,12 @@ copyNewLogButton.addEventListener("click", async function(event){
 	copyTooltip.style.top = event.pageY - 40 + "px"
 	copyTooltip.style.opacity = 1
 	copyTooltip.style.visibility = "visible"
+	newRoll.style.backgroundColor = "rgb(243, 229, 151, 0.65)"
 	copyTooltip.setAttribute("aria-hidden", "false")
-	await wait(800)
+	await wait(300)
+	newRoll.style.backgroundColor = "var(--log-bg-color)"
+	await wait(500)
+
 	copyTooltip.setAttribute("aria-hidden", "true")
 	copyTooltip.style.opacity = 0
 })
