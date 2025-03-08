@@ -22,7 +22,6 @@
 
 			<div class="small-box">
 				<div class="box-label">Total</div>
-				<div class="tooltip" id="deleteme">delete me</div>
 				<div id="total-box">0</div>
 			</div>
 			<div class="small-box">
@@ -35,16 +34,23 @@
 				<div class="box-label">Sides</div>
 				<input type="number" id="sides-box" placeholder="#" value="6">
 			</div>
-			<div class="small-box">
+			<div class="small-box quantity-box">
 				<div class="box-label"># of dice</div>
 				<input type="number" id="quantity-box" placeholder="#" value="5">
 				
 			</div>
 			<div class="small-box hidden-box"></div>
-			<div class="small-box">
+			<div class="small-box difficulty-test-box" id="difficulty-test-box">
 				<div class="box-label">DC</div>
 				<input type="number" id="target-number-box" placeholder="#">
 			</div>
+			<div id="target-number-checkbox-container">
+				<label class="checkbox-container" for="target-number-checkbox">
+					<input id="target-number-checkbox" type="checkbox" checked="checked">
+					<span class="checkmark"></span>
+				</label>
+			</div>
+
 		</div>
 		<div class="grid-col-span-2 log-box">
 			<div id="new-roll-log"></div>
@@ -56,3 +62,4 @@
 
 </body>
 </html>
+

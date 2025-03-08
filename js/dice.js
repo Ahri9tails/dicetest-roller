@@ -6,13 +6,16 @@ const rollLog = document.getElementById("roll-log")
 //dice user input fields
 const sidesInput = document.getElementById("sides-box")
 const quantityInput = document.getElementById("quantity-box")
+const difficultyTestBox = document.getElementById("difficulty-test-box")
 const targetNumberInput = document.getElementById("target-number-box")
+const targetNumberCheckbox = document.getElementById("target-number-checkbox")
 const usernameInput = document.getElementById("username")
 
 const rollButton = document.getElementById("roll-button")
 const copyTooltip = document.getElementById("copy-tooltip")
 const copyNewLogButton = document.getElementById("copy-new-log-button")
 
+let targetNumberValue = ""
 let newLogText = ""
 
 //possibly remove the periods in the log
@@ -29,6 +32,9 @@ if it's neither of those cases
 
 	Next steps: Add checkbox for DC
 	add a copy to clipboard button
+	get checkbox id and onclick check the checked value
+	hide the DC and set to 0 when unchecked
+	unhide the DC when checked, and set it to the last DC value
 */
 
 
@@ -46,6 +52,31 @@ async function wait(ms) {
 	console.log(`waited ${ms} ms`)
 }
 
+
+/* processRoll(sidesInput.innerHTML, quantityInput.innerHTML, targetNumberInput.innerHTML) */
+
+rollButton.addEventListener("click", function () {
+	processRoll(sidesInput.value, quantityInput.value, targetNumberInput.value, usernameInput.value)
+})
+
+targetNumberCheckbox.addEventListener("click", function() {
+	console.log(targetNumberCheckbox.checked)
+	if (targetNumberCheckbox.checked) {
+		difficultyTestBox.style.visibility = "visible"
+		targetNumberInput.value = targetNumberValue
+		console.log("make the box appear")
+	} else {
+		difficultyTestBox.style.visibility = "hidden"
+		targetNumberValue = targetNumberInput.value
+		targetNumberInput.value = ""
+		console.log("Hide the box")
+		console.log(targetNumberValue)
+		return targetNumberValue = targetNumberValue
+	}
+
+
+})
+
 function processRoll(diceFaces, diceQuantity, targetNumber, username) {
 	diceFaces = parseInt(diceFaces, 10)
 	diceQuantity = parseInt(diceQuantity, 10)
@@ -60,12 +91,6 @@ function processRoll(diceFaces, diceQuantity, targetNumber, username) {
 	rollDice(diceFaces, diceQuantity, targetNumber, username)
 }
 
-
-/* processRoll(sidesInput.innerHTML, quantityInput.innerHTML, targetNumberInput.innerHTML) */
-
-rollButton.addEventListener("click", function () {
-	processRoll(sidesInput.value, quantityInput.value, targetNumberInput.value, usernameInput.value)
-})
 //dice need faces, number, and maybe challenge rating
 function rollDice(faces, amount, targetNumber, username) {
 	let total = 0
