@@ -31,6 +31,39 @@ input[type=number] {
 	flex: 1;
 }
 
+/* [data-tooltip] {
+	position: relative;
+} */
+
+
+.tooltip {
+	position: absolute;
+	visibility: hidden;
+	opacity: 0;
+	font-size: small;
+	font-weight: 100;
+	transition: opacity 0.8s ease-in-out;
+	white-space: nowrap;
+	padding: 8px;
+	background: rgb(240, 225, 153);
+	color:rgb(41, 33, 3);
+	border-radius: 5px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	pointer-events: none;
+	transform: translateX(-50%);
+}
+
+
+
+
+/* [data-tooltip]:active::before {
+	opacity: 1;
+}
+
+[data-tooltip]:not([data-tooltip-persistent])::before {
+	pointer-events: none;
+} */
+
 .base-window {
 	background-color: var(--window-bg-color);
 	max-width: 21.563rem;
@@ -81,6 +114,30 @@ input[type=number] {
 	
 }
 
+.log-box {
+	display: grid;
+	grid-template-columns: auto auto 41px;
+	margin-top: 2rem;
+	margin-right: 9rem;
+	max-width: 50rem;
+}
+
+.clipboard-button {
+	background: url(/icons/copy_to_clipboard_line_icon.png);
+	background-size: contain;
+	background-color: hsl(301, 100%, 67%, 19%);
+	border: none;
+	border-radius: 10%;
+	width: 41px;
+	height: 41px;
+	margin-left: 0.4rem;
+}
+
+.clipboard-button:active {
+	background-color: hsla(301, 100%, 67%, 0.452);
+
+}
+
 #rollbox {
 	min-height: 27rem;
 	min-width: 21.563rem;
@@ -120,7 +177,6 @@ input[type=number] {
 	border: solid 6px var(--window-border-color);
 	border-radius: 2%;
 	padding: 0.8rem;
-	margin-top: 2rem;
 	background: var(--log-bg-color);
 }
 

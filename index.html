@@ -22,6 +22,7 @@
 
 			<div class="small-box">
 				<div class="box-label">Total</div>
+				<div class="tooltip" id="deleteme">delete me</div>
 				<div id="total-box">0</div>
 			</div>
 			<div class="small-box">
@@ -45,9 +46,12 @@
 				<input type="number" id="target-number-box" placeholder="#">
 			</div>
 		</div>
-		<div id="new-roll-log">
+		<div class="grid-col-span-2 log-box">
+			<div id="new-roll-log"></div>
+			<button class="clipboard-button" id="copy-new-log-button"></button>
+			<div id="copy-tooltip" class="tooltip" aria-hidden="true">Copied to Clipboard</div>
+			<div id="roll-log" class="grid-col-span-2"></div>
 		</div>
-		<div id="roll-log" class="grid-col-span-2"></div>
 	</div>
 
 </body>

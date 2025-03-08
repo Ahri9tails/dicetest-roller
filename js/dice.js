@@ -10,6 +10,10 @@ const targetNumberInput = document.getElementById("target-number-box")
 const usernameInput = document.getElementById("username")
 
 const rollButton = document.getElementById("roll-button")
+const copyTooltip = document.getElementById("copy-tooltip")
+const copyNewLogButton = document.getElementById("copy-new-log-button")
+
+let newLogText = ""
 
 //possibly remove the periods in the log
 
@@ -22,10 +26,25 @@ otherwise
 	otherwise not green
 if it's neither of those cases
 	something is wrong
+
+	Next steps: Add checkbox for DC
+	add a copy to clipboard button
 */
 
 
 console.log(rollButton)
+
+
+function sleep(ms) {
+	return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+// wait ms milliseconds before continuing
+async function wait(ms) {
+	console.log("begin wait", ms)
+	await sleep(ms)
+	console.log(`waited ${ms} ms`)
+}
 
 function processRoll(diceFaces, diceQuantity, targetNumber, username) {
 	diceFaces = parseInt(diceFaces, 10)
@@ -37,7 +56,7 @@ function processRoll(diceFaces, diceQuantity, targetNumber, username) {
 		console.log("error")
 		return
 	}
-	console.log("username check", username)
+
 	rollDice(diceFaces, diceQuantity, targetNumber, username)
 }
 
@@ -79,9 +98,6 @@ function rollDice(faces, amount, targetNumber, username) {
 function challengeTest(array, targetNumber) {
 	let successes = 0
 	for (let i = 0; i < array.length; i++) {
-		console.log(`array ${i} = ${array[i]}`)
-		console.log(`targetNumber = ${targetNumber}`)
-
 		if (targetNumber <= array[i]) {
 			successes++
 		}
@@ -95,7 +111,14 @@ function renderRoll(rollResults, total, successes, faces, targetNumber, username
 	//the DC have to be converted into strings that color
 	//the numbers green but this should probably be done
 	//at creation of the array.
-let rollResultsStyle = []
+	let rollResultsStyle = []
+	let clipboardStyle = []
+
+	if (!username) {
+		username = "You"
+	}
+
+
 
 	for (let i = 0; i < rollResults.length; i++) {
 		//take all the dice results and highlight them for successes or
@@ -104,14 +127,18 @@ let rollResultsStyle = []
 		if (targetNumber) {
 			if (die >= targetNumber) {
 				rollResultsStyle.push(`<span style="color:#08d108">${die}</span>`)
+				clipboardStyle.push(`[color=green]${die}[/color]`)
 			} else if (die < targetNumber) {
 				rollResultsStyle.push(die)
+				clipboardStyle.push(die)
 			}
 		} else if (!!targetNumber == false) {
 			if (die === faces) {
 				rollResultsStyle.push(`<span style="color:#08d108">${die}</span>`)
+				clipboardStyle.push(`[color=green]${die}[/color]`)
 			} else if (die < faces) {
 				rollResultsStyle.push(die)
+				clipboardStyle.push(die)
 			}
 		} else {
 			console.log("unexpected value found in rollDice()")
@@ -122,11 +149,16 @@ let rollResultsStyle = []
 		}
 	}
 
-	//to avoid the trailing comma, we make the variable equal to the first item in the array
-	//then start the loop at 1 instead of 0, and have the comma placed first, then the item.
+	//the string entered into the log
 	let rollResultString = rollResultsStyle[0]
+
+	//the string that should be inserted into the clipboard on clipboard button press
+	let newResultClipboard = `${username} rolled: ${clipboardStyle[0]}`
 	for (let i = 1; i < rollResultsStyle.length; i++) {
+		//to avoid the trailing comma, we make the variable equal to the first item in the array
+		//then start the loop at 1 instead of 0, and have the comma placed first, then the item.
 		rollResultString += ", " + rollResultsStyle[i]
+		newResultClipboard += ", " + clipboardStyle[i]
 	}
 	
 	
@@ -135,11 +167,12 @@ let rollResultsStyle = []
 	rollBoxContent.innerHTML = `${rollResultString}`
 
 	//process the dice rolls into a text log.
-	console.log(username)
+	console.log("newresultclipboard", newResultClipboard)
+	console.log("rollresultstring", rollResultString)
 	if (!username) {
 		username = "You"
 	}
-	
+
 	rollResultString = `${username} rolled: ${rollResultString}. | Total: ${total}.`
 
 	//check for DC value. Add successes to box and log 
@@ -154,7 +187,25 @@ let rollResultsStyle = []
 	newRoll.innerHTML = rollResultString
 	rollLog.innerHTML += rollResultString + "</br>"
 	totalBox.innerHTML = total
+
+	return newLogText = newResultClipboard
 }
+
+copyNewLogButton.addEventListener("click", async function(event){
+	copyTooltip.style.left = event.pageX + "px"
+	copyTooltip.style.top = event.pageY - 40 + "px"
+	copyTooltip.style.opacity = 1
+	copyTooltip.style.visibility = "visible"
+	copyTooltip.setAttribute("aria-hidden", "false")
+	await wait(800)
+	copyTooltip.setAttribute("aria-hidden", "true")
+	copyTooltip.style.opacity = 0
+})
+
+copyNewLogButton.addEventListener("click", function(){
+	navigator.clipboard.writeText(newLogText)
+})
+
 
 //const newRoll = document.getElementById("new-roll-log")
 //const totalBox = document.getElementById("total-box")
