@@ -1,0 +1,27 @@
+{
+  "name": "dicetest-roller",
+  "version": "1.0.0",
+  "description": "rolls dice with multiple users able to watch the results.",
+  "main": "dice.js",
+  "scripts": {
+	"devStart": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ahri9tails/dicetest-roller.git"
+  },
+  "author": "Ahri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ahri9tails/dicetest-roller/issues"
+  },
+  "homepage": "https://github.com/Ahri9tails/dicetest-roller#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
