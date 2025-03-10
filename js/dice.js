@@ -18,8 +18,6 @@ const copyNewLogButton = document.getElementById("copy-new-log-button")
 let targetNumberValue = ""
 let newLogText = ""
 
-//possibly remove the periods in the log
-
 /*
 if there is a target number
 	if the result is greater or equal, green
@@ -30,11 +28,12 @@ otherwise
 if it's neither of those cases
 	something is wrong
 
-	Next steps: Add checkbox for DC
-	add a copy to clipboard button
-	get checkbox id and onclick check the checked value
-	hide the DC and set to 0 when unchecked
-	unhide the DC when checked, and set it to the last DC value
+add a few divs to contain usernames for current active users
+make a splash page for solo or multi-user use and to input room codes.
+create online functionality
+
+
+for connected user list, attach the name to a socket
 */
 
 

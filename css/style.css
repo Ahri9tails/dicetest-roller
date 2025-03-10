@@ -31,11 +31,6 @@ input[type=number] {
 	flex: 1;
 }
 
-/* [data-tooltip] {
-	position: relative;
-} */
-
-
 .tooltip {
 	position: absolute;
 	visibility: hidden;
@@ -53,26 +48,14 @@ input[type=number] {
 	transform: translateX(-50%);
 }
 
-
-
-
-/* [data-tooltip]:active::before {
-	opacity: 1;
-}
-
-[data-tooltip]:not([data-tooltip-persistent])::before {
-	pointer-events: none;
-} */
-
 .base-window {
 	background-color: var(--window-bg-color);
-	max-width: 21.563rem;
+	width: 21.563rem;
 	min-height: 4rem;
 	margin: 5px 0px 15px;
 	border: solid 6px var(--window-border-color);
 	border-radius: 2%;
 	display: flex;
-
 }
 
 .double-grid {
@@ -192,6 +175,13 @@ input[type=number] {
 	background: var(--log-bg-color);
 }
 
+#username-list {
+	display: flex;
+	margin-left: 20px;
+	align-items: center;
+	margin-bottom: 0.8rem;
+}
+
 .grid {
 	display: grid;
 	gap: 1.5rem;
@@ -293,6 +283,11 @@ input[type=number] {
 	--window-border-color: color-mix(in prophoto-rgb, var(--dark-windowbg2), var(--dark-windowbg1));
 	--window-bg-color: hsl(299, 59%, 49%, 6%);
 	--log-bg-color: hsl(249, 44%, 15%, 90%); 
+}
+
+.username-area {
+	display: grid;
+	grid-template-columns: auto 1fr;
 }
 
 :root {
