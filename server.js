@@ -17,14 +17,30 @@ const io = socketio(expressServer,{
 
 })
 
+
+const users = {}
+
 // on is a regular js/node event listener
 // emit is another method
 io.on("connect",socket=>{
+	socket.emit("join", Object.keys(users).length)
+	socket.on("new-user", username => {
+		users[socket.id] = username
+		console.log("all the user objects", users)
+		userlist = Object.values(users)
+		io.emit("user-connected", userlist)
+	})
 	console.log(socket.id, " has joined the server.")
 	//emit("event name", data)
-	socket.emit("join", "test data")
+
 	socket.on("roll", rollResultString=>{
 		console.log(rollResultString)
 		socket.broadcast.emit("roll-result", rollResultString)
+	})
+
+	socket.on("change-username", username => {
+		users[socket.id] = username
+		userlist = Object.values(users)
+		io.emit("user-connected", userlist)
 	})
 })
