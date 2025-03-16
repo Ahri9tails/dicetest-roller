@@ -1,5 +1,7 @@
 /* const { Socket } = require("engine.io") */
 
+// Check all comments for accuracy then delete this line
+
 const rollBoxContent = document.getElementById("rollbox-content")
 const newRoll = document.getElementById("new-roll-log")
 const totalBox = document.getElementById("total-box")
@@ -12,6 +14,7 @@ const difficultyTestBox = document.getElementById("difficulty-test-box")
 const targetNumberInput = document.getElementById("target-number-box")
 const targetNumberCheckbox = document.getElementById("target-number-checkbox")
 const usernameInput = document.getElementById("username")
+const usernameList = document.getElementById("username-list")
 
 const rollButton = document.getElementById("roll-button")
 const copyTooltip = document.getElementById("copy-tooltip")
@@ -26,8 +29,8 @@ let targetNumberValue = ""
 let newLogText = ""
 //assign true to enable socket logic
 let multiplayer = true
-
-
+//contains timeout before running the function to send username data
+let typingTimer = ""
 /*
 if there is a target number
 	if the result is greater or equal, green
@@ -50,27 +53,21 @@ for connected user list, attach the name to a socket
 //server
 //socket.emit("Event name", "data") 
 // data can be a variable
-// we want to send line 223 to the server: 
-// rollLog.innerHTML += rollResultString + "</br>"
 // the server will recieve the data with
 // socket.on("eventName", variable => {} )
-//for data, you can also send an object and then access the content
+// for data, you can also send an object and then access the content
 // in the object with object.key
 
+//check socket for name. Assign name to socket. Display socket name properly.
 
-// send rollResultString
-//  server should rollResultString to renderElement
-//	renderElement(rollLog, rollResultString, true)
-//
 
 console.log(io)
 console.log(rollButton)
-
-socket.on("join", data=>{
-	console.log(data)
-})
+console.log("username", usernameInput.value)
 
 
+
+// called by await wait
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -103,9 +100,21 @@ targetNumberCheckbox.addEventListener("click", function() {
 		console.log(targetNumberValue)
 		return targetNumberValue = targetNumberValue
 	}
-
-
 })
+
+// you can use "change" to update on losing focus
+// reset delay before running username update function each time
+// a character is typed in the input field.
+usernameInput.addEventListener("input", function() {
+	clearTimeout(typingTimer)
+	typingTimer = setTimeout(updateName, 1000)
+})
+
+usernameInput.addEventListener("keydown", function() {
+	clearTimeout(typingTimer)
+})
+
+
 
 function processRoll(diceFaces, diceQuantity, targetNumber, username, multiplayer) {
 	diceFaces = parseInt(diceFaces, 10)
@@ -286,6 +295,14 @@ copyNewLogButton.addEventListener("click", function(){
 	navigator.clipboard.writeText(newLogText)
 })
 
+
+
+socket.on("join", data=>{
+	console.log(data)
+	username = `user${data + 1}`
+	socket.emit("new-user", username)
+})
+
 // listen for other user's roll event, then
 //add their roll result to log
 socket.on("roll-result", rollResultString=>{
@@ -293,7 +310,24 @@ socket.on("roll-result", rollResultString=>{
 	renderElement(rollLog, rollResultString, true)
 })
 
+socket.on("user-connected", userlist => {
+	console.log(userlist)
+	let styledUserlist = "Users: "
+	for (let i = 0; i < userlist.length; i++) {
+		styledUserlist += `${userlist[i]} `
+	}
+	
+	//username needs to send every socket.id in users
+	usernameList.innerHTML = styledUserlist
+})
 
+function updateName() {
+	console.log("test update name")
+	let username = usernameInput.value
+	socket.emit("change-username", username)
+	
+
+}
 
 
 //const newRoll = document.getElementById("new-roll-log")
