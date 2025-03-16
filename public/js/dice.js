@@ -58,7 +58,8 @@ for connected user list, attach the name to a socket
 // for data, you can also send an object and then access the content
 // in the object with object.key
 
-//check socket for name. Assign name to socket. Display socket name properly.
+//add room name to the page
+//add landing page to select online or offline mode and room key
 
 
 console.log(io)
@@ -312,6 +313,8 @@ socket.on("roll-result", rollResultString=>{
 
 socket.on("user-connected", userlist => {
 	console.log(userlist)
+	//fix bug of users assigned the same name
+	//try looping through user1, 2, 3, until there is no match then assign the name
 	let styledUserlist = "Users: "
 	for (let i = 0; i < userlist.length; i++) {
 		styledUserlist += `${userlist[i]} `

@@ -27,8 +27,7 @@ io.on("connect",socket=>{
 	socket.on("new-user", username => {
 		users[socket.id] = username
 		console.log("all the user objects", users)
-		userlist = Object.values(users)
-		io.emit("user-connected", userlist)
+		updateUserlist()
 	})
 	console.log(socket.id, " has joined the server.")
 	//emit("event name", data)
@@ -40,7 +39,16 @@ io.on("connect",socket=>{
 
 	socket.on("change-username", username => {
 		users[socket.id] = username
-		userlist = Object.values(users)
-		io.emit("user-connected", userlist)
+		updateUserlist()
+	})
+
+	socket.on("disconnect", () => {
+		delete users[socket.id]
+		updateUserlist()
 	})
 })
+
+function updateUserlist() {
+	userlist = Object.values(users)
+	io.emit("user-connected", userlist)
+}
