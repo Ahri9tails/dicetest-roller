@@ -1,3 +1,5 @@
+/* const { Socket } = require("engine.io") */
+
 const rollBoxContent = document.getElementById("rollbox-content")
 const newRoll = document.getElementById("new-roll-log")
 const totalBox = document.getElementById("total-box")
@@ -15,8 +17,16 @@ const rollButton = document.getElementById("roll-button")
 const copyTooltip = document.getElementById("copy-tooltip")
 const copyNewLogButton = document.getElementById("copy-new-log-button")
 
+// io() connects to the socket.io server at the url
+const socket = io("http://localhost:6853")
+
+// saves targetNumberInput.value when the DC box is closed
 let targetNumberValue = ""
+// contains the string that the clipboard button copies to clipboard
 let newLogText = ""
+//assign true to enable socket logic
+let multiplayer = true
+
 
 /*
 if there is a target number
@@ -36,8 +46,29 @@ create online functionality
 for connected user list, attach the name to a socket
 */
 
+//server will send an event named "string" amd the event will send data
+//server
+//socket.emit("Event name", "data") 
+// data can be a variable
+// we want to send line 223 to the server: 
+// rollLog.innerHTML += rollResultString + "</br>"
+// the server will recieve the data with
+// socket.on("eventName", variable => {} )
+//for data, you can also send an object and then access the content
+// in the object with object.key
 
+
+// send rollResultString
+//  server should rollResultString to renderElement
+//	renderElement(rollLog, rollResultString, true)
+//
+
+console.log(io)
 console.log(rollButton)
+
+socket.on("join", data=>{
+	console.log(data)
+})
 
 
 function sleep(ms) {
@@ -55,7 +86,7 @@ async function wait(ms) {
 /* processRoll(sidesInput.innerHTML, quantityInput.innerHTML, targetNumberInput.innerHTML) */
 
 rollButton.addEventListener("click", function () {
-	processRoll(sidesInput.value, quantityInput.value, targetNumberInput.value, usernameInput.value)
+	processRoll(sidesInput.value, quantityInput.value, targetNumberInput.value, usernameInput.value, multiplayer)
 })
 
 targetNumberCheckbox.addEventListener("click", function() {
@@ -76,7 +107,7 @@ targetNumberCheckbox.addEventListener("click", function() {
 
 })
 
-function processRoll(diceFaces, diceQuantity, targetNumber, username) {
+function processRoll(diceFaces, diceQuantity, targetNumber, username, multiplayer) {
 	diceFaces = parseInt(diceFaces, 10)
 	diceQuantity = parseInt(diceQuantity, 10)
 	targetNumber = parseInt(targetNumber, 10)
@@ -87,11 +118,11 @@ function processRoll(diceFaces, diceQuantity, targetNumber, username) {
 		return
 	}
 
-	rollDice(diceFaces, diceQuantity, targetNumber, username)
+	rollDice(diceFaces, diceQuantity, targetNumber, username, multiplayer)
 }
 
 //dice need faces, number, and maybe challenge rating
-function rollDice(faces, amount, targetNumber, username) {
+function rollDice(faces, amount, targetNumber, username, multiplayer) {
 	let total = 0
 	let rollResults = []
 	let successes = ""
@@ -112,7 +143,7 @@ function rollDice(faces, amount, targetNumber, username) {
 		successes = challengeTest(rollResults, targetNumber)
 	}
 
-	renderRoll(rollResults, total, successes, faces, targetNumber, username)
+	renderRoll(rollResults, total, successes, faces, targetNumber, username, multiplayer)
 }
 
 //if the challenge DC test is checked, then run this function to check for successes in the roll
@@ -130,7 +161,9 @@ function challengeTest(array, targetNumber) {
 
 }
 
-function renderRoll(rollResults, total, successes, faces, targetNumber, username) {
+function renderRoll(rollResults, total, successes, faces, targetNumber, username, multiplayer) {
+	//array of numbers, number, number, number, number, string
+	//rollResults is an array of the rolled dice results.
 	//if there is a DC, numbers that are greater than or equal to
 	//the DC have to be converted into strings that color
 	//the numbers green but this should probably be done
@@ -147,6 +180,7 @@ function renderRoll(rollResults, total, successes, faces, targetNumber, username
 	for (let i = 0; i < rollResults.length; i++) {
 		//take all the dice results and highlight them for successes or
 		//criticals
+		//needs rollResults, targetNumber, and faces
 		let die = rollResults[i]
 		if (targetNumber) {
 			if (die >= targetNumber) {
@@ -210,11 +244,27 @@ function renderRoll(rollResults, total, successes, faces, targetNumber, username
 		successesBox.innerHTML = "0"
 	}
 
-	newRoll.innerHTML = rollResultString
-	rollLog.innerHTML += rollResultString + "</br>"
-	totalBox.innerHTML = total
-	console.log(newResultClipboard)
+	renderElement(newRoll, rollResultString)
+	renderElement(rollLog, rollResultString, true)
+	renderElement(totalBox, total)
+
+	//send rollResultString if online session
+	if (multiplayer) {
+		socket.emit("roll", rollResultString)
+	}
+
 	return newLogText = newResultClipboard
+}
+
+function renderElement(domElement, logEntry, oldLog) {
+	//dom object, string or number, boolean
+	if (oldLog) {
+		domElement.innerHTML += logEntry + "<br>"
+	} else {
+		domElement.innerHTML = logEntry
+	}
+
+
 }
 
 copyNewLogButton.addEventListener("click", async function(event){
@@ -235,6 +285,15 @@ copyNewLogButton.addEventListener("click", async function(event){
 copyNewLogButton.addEventListener("click", function(){
 	navigator.clipboard.writeText(newLogText)
 })
+
+// listen for other user's roll event, then
+//add their roll result to log
+socket.on("roll-result", rollResultString=>{
+	console.log("signal recieved")
+	renderElement(rollLog, rollResultString, true)
+})
+
+
 
 
 //const newRoll = document.getElementById("new-roll-log")
