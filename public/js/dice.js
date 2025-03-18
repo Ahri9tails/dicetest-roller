@@ -19,16 +19,41 @@ const usernameList = document.getElementById("username-list")
 const rollButton = document.getElementById("roll-button")
 const copyTooltip = document.getElementById("copy-tooltip")
 const copyNewLogButton = document.getElementById("copy-new-log-button")
+let socket = ""
+
+let roomCode = ""
+
+function getRoomCode (){
+	let keyValuePair = new URLSearchParams(window.location.search)
+	roomCode = keyValuePair.get("room-code")
+}
+
+getRoomCode()
+
+
+// condense user data into an object with a username and a user room
+// add that to the server, append the room on join, probably in the if roomcode function.
+
+
+
+//assign true to enable socket logic
+let multiplayer = false
+
 
 // io() connects to the socket.io server at the url
-const socket = io("http://localhost:6853")
+if (roomCode) {
+	multiplayer = true
+	console.log("ONLINE IS ONLINE")
+	socket = io("http://localhost:6853")
+}
+
+
 
 // saves targetNumberInput.value when the DC box is closed
 let targetNumberValue = ""
 // contains the string that the clipboard button copies to clipboard
 let newLogText = ""
-//assign true to enable socket logic
-let multiplayer = true
+
 //contains timeout before running the function to send username data
 let typingTimer = ""
 /*
@@ -80,9 +105,6 @@ async function wait(ms) {
 	console.log(`waited ${ms} ms`)
 }
 
-
-/* processRoll(sidesInput.innerHTML, quantityInput.innerHTML, targetNumberInput.innerHTML) */
-
 rollButton.addEventListener("click", function () {
 	processRoll(sidesInput.value, quantityInput.value, targetNumberInput.value, usernameInput.value, multiplayer)
 })
@@ -92,13 +114,10 @@ targetNumberCheckbox.addEventListener("click", function() {
 	if (targetNumberCheckbox.checked) {
 		difficultyTestBox.style.visibility = "visible"
 		targetNumberInput.value = targetNumberValue
-		console.log("make the box appear")
 	} else {
 		difficultyTestBox.style.visibility = "hidden"
 		targetNumberValue = targetNumberInput.value
 		targetNumberInput.value = ""
-		console.log("Hide the box")
-		console.log(targetNumberValue)
 		return targetNumberValue = targetNumberValue
 	}
 })
@@ -331,6 +350,8 @@ function updateName() {
 	
 
 }
+
+
 
 
 //const newRoll = document.getElementById("new-roll-log")

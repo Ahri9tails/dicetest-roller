@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link href="css/style.css" rel="stylesheet">
+	<script src="/socket.io/socket.io.min.js" defer></script>
+	<script src="js/dice.js" defer></script>
+
+</head>
+<body>
+	<div class="username-area">
+		<div class="base-window">
+			<input type="text" placeholder="enter username here..." id="username">
+		</div>
+		<div id="username-list"></div>
+	</div>
+		<div class="double-grid">
+		<div class="grid">
+			<div id="rollbox" class="grid-col-span-2">
+				<div id="rollbox-content"></div>
+				<button id="roll-button">Roll</button>
+			</div>
+
+			<div class="small-box">
+				<div class="box-label">Total</div>
+				<div id="total-box">0</div>
+			</div>
+			<div class="small-box">
+				<div class="box-label">Successes</div>
+				<div id="successes-box">0</div>
+			</div>
+		</div>
+		<div class="smallgrid">
+			<div class="small-box dice-input-box">
+				<div class="box-label">Sides</div>
+				<input type="number" id="sides-box" placeholder="#" value="6">
+			</div>
+			<div class="small-box quantity-box">
+				<div class="box-label"># of dice</div>
+				<input type="number" id="quantity-box" placeholder="#" value="5">
+				
+			</div>
+			<div class="small-box hidden-box"></div>
+			<div class="small-box difficulty-test-box" id="difficulty-test-box">
+				<div class="box-label">DC</div>
+				<input type="number" id="target-number-box" placeholder="#">
+			</div>
+			<div id="target-number-checkbox-container">
+				<label class="checkbox-container" for="target-number-checkbox">
+					<input id="target-number-checkbox" type="checkbox" checked="checked">
+					<span class="checkmark"></span>
+				</label>
+			</div>
+
+		</div>
+		<div class="grid-col-span-2 log-box">
+			<div id="new-roll-log"></div>
+			<button class="clipboard-button" id="copy-new-log-button"></button>
+			<div id="copy-tooltip" class="tooltip" aria-hidden="true">Copied to Clipboard</div>
+			<div id="roll-log" class="grid-col-span-2"></div>
+		</div>
+	</div>
+
+</body>
+</html>
+
