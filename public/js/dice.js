@@ -82,15 +82,6 @@ for connected user list, attach the name to a socket
 // for data, you can also send an object and then access the content
 // in the object with object.key
 
-//add room name to the page
-//add landing page to select online or offline mode and room key
-
-
-console.log(io)
-console.log(rollButton)
-console.log("username", usernameInput.value)
-
-
 
 // called by await wait
 function sleep(ms) {
@@ -315,39 +306,41 @@ copyNewLogButton.addEventListener("click", function(){
 })
 
 
+if (multiplayer) {
+	//if offline don't define any server methods.
+
+
 // join emitted when a user joins the server(runs io())
 // data is the number of users connected
 // this gives a name based on the number of connected users
-socket.on("join", data=>{
-	console.log("data", data)
-	let room = roomCode
-	username = `user${data + 1}`
-	//need to send room
-	socket.emit("new-user", { username, room })
-})
+	socket.on("join", data=>{
+		console.log("data", data)
+		let room = roomCode
+		username = `user${data + 1}`
+		//need to send room
+		socket.emit("new-user", { username, room })
+	})
 
-// listen for other user's roll event, then
-//add their roll result to log
-socket.on("roll-result", rollResultString=>{
-	console.log("signal recieved")
-	renderElement(rollLog, rollResultString, true)
-})
+	// listen for other user's roll event, then
+	//add their roll result to log
+	socket.on("roll-result", rollResultString=>{
+		console.log("signal recieved")
+		renderElement(rollLog, rollResultString, true)
+	})
 
-socket.on("user-connected", userlist => {
-	console.log("userlist", userlist)
-	//fix bug of users assigned the same name
-	let styledUserlist = `Users: ${userlist}`
-	usernameList.innerHTML = styledUserlist
-})
+	socket.on("user-connected", userlist => {
+		console.log("userlist", userlist)
+		//fix bug of users assigned the same name
+		let styledUserlist = `Users: ${userlist}`
+		usernameList.innerHTML = styledUserlist
+	})
 
-function updateName() {
-	console.log("test update name")
-	let username = usernameInput.value
-	socket.emit("change-username", username)
-	
-
+	function updateName() {
+		console.log("test update name")
+		let username = usernameInput.value
+		socket.emit("change-username", username)
+	}
 }
-
 
 
 
