@@ -90,6 +90,10 @@ button::after {
 	transition: opacity 100ms linear;
 }
 
+a {
+	text-decoration: none;
+}
+
 .form-container {
 	display: grid;
 	place-items: center;
