@@ -66,8 +66,7 @@ otherwise
 if it's neither of those cases
 	something is wrong
 
-add a few divs to contain usernames for current active users
-make a splash page for solo or multi-user use and to input room codes.
+
 create online functionality
 
 
@@ -316,11 +315,15 @@ copyNewLogButton.addEventListener("click", function(){
 })
 
 
-
+// join emitted when a user joins the server(runs io())
+// data is the number of users connected
+// this gives a name based on the number of connected users
 socket.on("join", data=>{
-	console.log(data)
+	console.log("data", data)
+	let room = roomCode
 	username = `user${data + 1}`
-	socket.emit("new-user", username)
+	//need to send room
+	socket.emit("new-user", { username, room })
 })
 
 // listen for other user's roll event, then
