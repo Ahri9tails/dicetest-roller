@@ -334,15 +334,9 @@ socket.on("roll-result", rollResultString=>{
 })
 
 socket.on("user-connected", userlist => {
-	console.log(userlist)
+	console.log("userlist", userlist)
 	//fix bug of users assigned the same name
-	//try looping through user1, 2, 3, until there is no match then assign the name
-	let styledUserlist = "Users: "
-	for (let i = 0; i < userlist.length; i++) {
-		styledUserlist += `${userlist[i]} `
-	}
-	
-	//username needs to send every socket.id in users
+	let styledUserlist = `Users: ${userlist}`
 	usernameList.innerHTML = styledUserlist
 })
 
