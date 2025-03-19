@@ -104,9 +104,21 @@ io.on("connect",socket=>{
 function updateUserlist(currentUser) {
 	//this is going to print all the values of the users
 	//it probably will not work once rooms are added
-	userlist = Object.values(users)
-	console.log(".values of users", Object.values(users))
-	io.to(currentUser["room"]).emit("user-connected", userlist)
+
+	//fix this and everything is done
+
+	userlist = getRoomUsers()
+
+	let usernameList = ""
+	console.log(userlist[0])
+	for (i = 0; i < userlist.length; i++) {
+		usernameList += `${users[userlist[i]].username} `
+		console.log(usernameList)
+		
+	}
+
+	console.log("userlist", usernameList)
+	io.to(currentUser["room"]).emit("user-connected", usernameList)
 }
 
 function createUserObject(id, username, room ) {
@@ -120,7 +132,15 @@ function createUserObject(id, username, room ) {
 	return user
 }
 
-
+function getRoomUsers(currentRoom) {
+	//find all user objects with the room value matching the current room
+	//returns an array
+	let userArray = Object.keys(users)
+	console.log("user array", userArray)
+	const roomUserList = userArray.filter(({ room }) => room === currentRoom)
+	console.log("roomuserlist", roomUserList)
+	return roomUserList
+}
 
 // find all users inside of users with the user.id that equals the current id
 // we can probably use this to find all users inside of users with the user.room that equals the current room
