@@ -14,6 +14,7 @@ const difficultyTestBox = document.getElementById("difficulty-test-box")
 const targetNumberInput = document.getElementById("target-number-box")
 const targetNumberCheckbox = document.getElementById("target-number-checkbox")
 const usernameInput = document.getElementById("username")
+
 const usernameList = document.getElementById("username-list")
 
 const rollButton = document.getElementById("roll-button")
@@ -30,17 +31,12 @@ function getRoomCode (){
 
 getRoomCode()
 
-
-// condense user data into an object with a username and a user room
-// add that to the server, append the room on join, probably in the if roomcode function.
-
-
-
 //assign true to enable socket logic
 let multiplayer = false
 
 
 // io() connects to the socket.io server at the url
+// if a roomcode exists, connect to server and enable server code
 if (roomCode) {
 	multiplayer = true
 	console.log("ONLINE IS ONLINE")
@@ -56,32 +52,6 @@ let newLogText = ""
 
 //contains timeout before running the function to send username data
 let typingTimer = ""
-/*
-if there is a target number
-	if the result is greater or equal, green
-	otherwise it's not green
-otherwise
-	if the result is equal to faces, green
-	otherwise not green
-if it's neither of those cases
-	something is wrong
-
-
-create online functionality
-
-
-for connected user list, attach the name to a socket
-*/
-
-//server will send an event named "string" amd the event will send data
-//server
-//socket.emit("Event name", "data") 
-// data can be a variable
-// the server will recieve the data with
-// socket.on("eventName", variable => {} )
-// for data, you can also send an object and then access the content
-// in the object with object.key
-
 
 // called by await wait
 function sleep(ms) {
@@ -112,7 +82,6 @@ targetNumberCheckbox.addEventListener("click", function() {
 	}
 })
 
-// you can use "change" to update on losing focus
 // reset delay before running username update function each time
 // a character is typed in the input field.
 usernameInput.addEventListener("input", function() {
@@ -123,7 +92,6 @@ usernameInput.addEventListener("input", function() {
 usernameInput.addEventListener("keydown", function() {
 	clearTimeout(typingTimer)
 })
-
 
 
 function processRoll(diceFaces, diceQuantity, targetNumber, username, multiplayer) {
@@ -140,7 +108,7 @@ function processRoll(diceFaces, diceQuantity, targetNumber, username, multiplaye
 	rollDice(diceFaces, diceQuantity, targetNumber, username, multiplayer)
 }
 
-//dice need faces, number, and maybe challenge rating
+
 function rollDice(faces, amount, targetNumber, username, multiplayer) {
 	let total = 0
 	let rollResults = []
@@ -150,12 +118,6 @@ function rollDice(faces, amount, targetNumber, username, multiplayer) {
 		let item = Math.floor(Math.random() * faces + 1)
 		total += item
 		rollResults.push(item)
-		//if there is a target number. Each result greater or equal to target number
-		// must be surrounded by green this is old
-		// otherwise the result should be surrounded by green if it equals faces
-
-
-		
 	}
 	
 	if (targetNumber) {
@@ -165,9 +127,8 @@ function rollDice(faces, amount, targetNumber, username, multiplayer) {
 	renderRoll(rollResults, total, successes, faces, targetNumber, username, multiplayer)
 }
 
-//if the challenge DC test is checked, then run this function to check for successes in the roll
+//if the challenge DC has a vlue, then run this function to check for successes in the roll
 //otherwise it's just a normal roll
-
 //then run the render function
 function challengeTest(array, targetNumber) {
 	let successes = 0
@@ -183,10 +144,6 @@ function challengeTest(array, targetNumber) {
 function renderRoll(rollResults, total, successes, faces, targetNumber, username, multiplayer) {
 	//array of numbers, number, number, number, number, string
 	//rollResults is an array of the rolled dice results.
-	//if there is a DC, numbers that are greater than or equal to
-	//the DC have to be converted into strings that color
-	//the numbers green but this should probably be done
-	//at creation of the array.
 	let rollResultsStyle = []
 	let clipboardStyle = []
 
@@ -244,8 +201,6 @@ function renderRoll(rollResults, total, successes, faces, targetNumber, username
 	rollBoxContent.innerHTML = `${rollResultString}`
 
 	//process the dice rolls into a text log.
-	console.log("newresultclipboard", newResultClipboard)
-	console.log("rollresultstring", rollResultString)
 	if (!username) {
 		username = "You"
 	}
