@@ -12,6 +12,8 @@ const cors = require("cors")
 app.use(express.static("public"))
 const expressServer = app.listen(6853)
 
+console.log(expressServer)
+
 const socketio = require("socket.io")
 
 //this serves up the "/socket.io/socket.io.min.js"

@@ -40,7 +40,7 @@ let multiplayer = false
 if (roomCode) {
 	multiplayer = true
 	console.log("ONLINE IS ONLINE")
-	socket = io("http://localhost:6853")
+	socket = io()
 }
 
 
