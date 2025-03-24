@@ -19,7 +19,7 @@ const socketio = require("socket.io")
 //handle cors https://socket.io/docs/v4/handling-cors/
 const io = socketio(expressServer,{
 	cors: {
-		origin: "http://localhost:6853"
+		origin: ["https://dicetest-roller.onrender.com", "http://localhost:6853"]
 	}
 })
 
