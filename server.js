@@ -5,6 +5,9 @@ const express = require("express")
 //???
 const { emit } = require("process")
 const app = express()
+
+const cors = require("cors")
+
 // serve the files in public statically
 app.use(express.static("public"))
 const expressServer = app.listen(6853)
@@ -13,8 +16,11 @@ const socketio = require("socket.io")
 
 //this serves up the "/socket.io/socket.io.min.js"
 //adds it to the global scope
+//handle cors https://socket.io/docs/v4/handling-cors/
 const io = socketio(expressServer,{
-
+	cors: {
+		origin: "http://localhost:6853"
+	}
 })
 
 //maybe change to user list or user container or user database or user 
