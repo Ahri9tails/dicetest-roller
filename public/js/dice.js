@@ -279,7 +279,6 @@ if (multiplayer) {
 	// listen for other user's roll event, then
 	//add their roll result to log
 	socket.on("roll-result", rollResultString=>{
-		console.log("signal recieved")
 		renderElement(rollLog, rollResultString, true)
 	})
 
@@ -293,6 +292,7 @@ if (multiplayer) {
 	function updateName() {
 		console.log("test update name")
 		let username = usernameInput.value
+		console.log(`username ${username}`)
 		socket.emit("change-username", username)
 	}
 }

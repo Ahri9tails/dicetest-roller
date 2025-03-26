@@ -12,8 +12,6 @@ const cors = require("cors")
 app.use(express.static("public"))
 const expressServer = app.listen(6853)
 
-console.log(expressServer)
-
 const socketio = require("socket.io")
 
 //this serves up the "/socket.io/socket.io.min.js"
@@ -78,15 +76,8 @@ io.on("connect",socket=>{
 		// need to send username and room on "new-user" emit
 		// add username to the socket id in the user list
 		// add socket.room
-		console.log("username", username)
-		console.log("room", room)
 		currentUser = users[socket.id]
-		console.log("test get user", currentUser["room"])
-
-
-		console.log("all the user objects", users, room)
-		console.log("current socket user object", users[socket.id])
-		updateUserlist(currentUser)
+		updateUserlist(currentUser, currentUser["room"])
 	})
 	console.log(socket.id, " has joined the server.")
 	//emit("event name", data)
@@ -98,34 +89,40 @@ io.on("connect",socket=>{
 		socket.broadcast.to(currentUser["room"]).emit("roll-result", rollResultString)
 	})
 
+	//send the socket id instead?
+	//
 	socket.on("change-username", username => {
+		currentUser = users[socket.id]
 		currentUser["username"] = username
-		updateUserlist(currentUser)
+		updateUserlist(currentUser, currentUser["room"])
 	})
 
 	socket.on("disconnect", () => {
+		currentUser = users[socket.id]
 		delete users[socket.id]
-		updateUserlist(currentUser)
+		updateUserlist(currentUser, currentUser["room"])
 	})
 })
 
-function updateUserlist(currentUser) {
+function updateUserlist(currentUser, currentUserRoom) {
 	//this is going to print all the values of the users
 	//it probably will not work once rooms are added
 
 	//fix this and everything is done
 
-	userlist = getRoomUsers()
+	console.log("updateuserlist currentUser", currentUser)
+	console.log("currentUserRoom", currentUserRoom)
+	userlist = getRoomUsers(currentUserRoom)
 
 	let usernameList = ""
-	console.log(userlist[0])
+	//grab all usernames from connected user objects and put them in a string
 	for (i = 0; i < userlist.length; i++) {
-		usernameList += `${users[userlist[i]].username} `
-		console.log(usernameList)
+	//	usernameList += `${users[userlist[i]].username} `
+		usernameList += `${userlist[i].username} `
+		console.log(`user ${i} is ${usernameList}`)
 		
 	}
 
-	console.log("userlist", usernameList)
 	io.to(currentUser["room"]).emit("user-connected", usernameList)
 }
 
@@ -142,10 +139,13 @@ function createUserObject(id, username, room ) {
 
 function getRoomUsers(currentRoom) {
 	//find all user objects with the room value matching the current room
-	//returns an array
-	let userArray = Object.keys(users)
+	//returns an array of user objects
+	let userArray = Object.values(users)
+	console.log(users)
 	console.log("user array", userArray)
-	const roomUserList = userArray.filter(({ room }) => room === currentRoom)
+	console.log("currentUserRoom", currentRoom)
+	console.log("user array 1", userArray[0])
+	const roomUserList = userArray.filter((user) => user.room === currentRoom)
 	console.log("roomuserlist", roomUserList)
 	return roomUserList
 }
